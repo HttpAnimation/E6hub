@@ -12,7 +12,6 @@ headers = {
     "Authorization": f"Basic {api_key}"
 }
 
-# Function to download all favorites of a user
 def download_favorites():
     # Send GET request to the favorites endpoint
     response = requests.get(base_url, headers=headers)
