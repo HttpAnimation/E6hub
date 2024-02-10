@@ -28,7 +28,7 @@ def download_favorites(username, api_key):
     if response.status_code == 200:
         data = response.json()
         favorites = data.get("posts", [])  
-        save_directory = "UserFavDownloads"
+        save_directory = "UserFavDownloads/jsonData"
         os.makedirs(save_directory, exist_ok=True)
         for idx, favorite in enumerate(favorites):
             filename = os.path.join(save_directory, f"favorite_{idx}.json")
