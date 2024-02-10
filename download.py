@@ -19,7 +19,7 @@ def download_favorites(username, api_key):
     base_url = "https://e621.net/favorites.json"
 
     headers = {
-        "User-Agent": f"MyProject/1.0 (by {username} on e621)",
+        "User-Agent": f"E6hub/1.0 (by {username} on e621)",
         "Authorization": f"Basic {api_key}"
     }
 
