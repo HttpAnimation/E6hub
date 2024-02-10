@@ -4,7 +4,6 @@ import requests
 username = "your_username"
 api_key = "your_api_key"
 
-# Define the base URL for the favorites endpoint
 base_url = "https://e621.net/favorites.json"
 
 headers = {
