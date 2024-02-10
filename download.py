@@ -1,6 +1,5 @@
 import requests
 
-# Define your e621 username and API key
 username = "your_username"
 api_key = "your_api_key"
 
