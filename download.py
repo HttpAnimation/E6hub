@@ -18,7 +18,6 @@ def download_favorites():
     # Check if the request was successful
     if response.status_code == 200:
         favorites = response.json()
-        # Iterate through each favorite and process accordingly
         for favorite in favorites:
             print(favorite)  
     else:
