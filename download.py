@@ -19,14 +19,15 @@ def download_favorites(username, api_key):
     base_url = "https://e621.net/favorites.json"
 
     headers = {
-        "User-Agent": f"E6hub/1.1 (by {username} on e621)"
+        "User-Agent": f"E6hub/1.2 (by {username} on e621)"
     }
     auth = (username, api_key)
 
     response = requests.get(base_url, headers=headers, auth=auth)
     
     if response.status_code == 200:
-        favorites = response.json()
+        data = response.json()
+        favorites = data.get("posts", [])  
         save_directory = "UserFavDownloads"
         os.makedirs(save_directory, exist_ok=True)
         for idx, favorite in enumerate(favorites):
