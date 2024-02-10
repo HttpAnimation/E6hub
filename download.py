@@ -1,3 +1,4 @@
+import os
 import requests
 import json
 
@@ -26,8 +27,13 @@ def download_favorites(username, api_key):
     
     if response.status_code == 200:
         favorites = response.json()
-        for favorite in favorites:
-            print(favorite)  
+        save_directory = "UserFavDownloads"
+        os.makedirs(save_directory, exist_ok=True)
+        for idx, favorite in enumerate(favorites):
+            filename = os.path.join(save_directory, f"favorite_{idx}.json")
+            with open(filename, "w") as file:
+                json.dump(favorite, file, indent=4) 
+            print(f"Favorite {idx + 1} downloaded and saved as {filename}")
     else:
         print(f"Failed to download favorites. Status code: {response.status_code}")
 
