@@ -9,12 +9,7 @@ sleep 2
 # Download
 git clone -b stable https://github.com/HttpAnimation/E6hub.git
 cd E6hub
-## Remove file
-rm .gitignore
-rm README.md
-## End
 cd ../
-
 # Foot
 echo "Done installing"
 rm install.bash
