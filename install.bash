@@ -1,5 +1,6 @@
 # Head
 echo "E6hub downloader"
+echo "Flavor: Normal"
 echo "Github: https://github.com/HttpAnimation/E6hub"
 echo "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
 sleep 2
