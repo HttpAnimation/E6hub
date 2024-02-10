@@ -24,5 +24,4 @@ def download_favorites():
     else:
         print(f"Failed to download favorites. Status code: {response.status_code}")
 
-# Call the function to download favorites
 download_favorites()
