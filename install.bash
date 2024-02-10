@@ -6,4 +6,4 @@ sleep 2
 
 # Download
 mkdir E6hub
-cd Es6hub
+cd E6hub
