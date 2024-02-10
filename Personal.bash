@@ -1,2 +1,2 @@
 cd ../ 
-cp -r stable /home/httpanimation/Desktop
+cp -r stable /home/httpanimations/Desktop/
