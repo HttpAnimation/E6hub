@@ -9,6 +9,7 @@ sleep 2
 # Download
 git clone -b stable https://github.com/HttpAnimation/E6hub.git
 cd E6hub
+mv '[PUBLIC] clientconfig.json' clientconfig.json
 cd ../
 # Foot
 echo "Done installing"
