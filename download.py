@@ -7,7 +7,6 @@ api_key = "your_api_key"
 # Define the base URL for the favorites endpoint
 base_url = "https://e621.net/favorites.json"
 
-# Define the headers with the user agent and authorization
 headers = {
     "User-Agent": f"MyProject/1.0 (by {username} on e621)",
     "Authorization": f"Basic {api_key}"
