@@ -5,4 +5,4 @@ echo "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
 sleep 2
 
 # Download
-mdir E6hub
+mkdir E6hub
