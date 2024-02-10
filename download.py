@@ -13,7 +13,6 @@ headers = {
 }
 
 def download_favorites():
-    # Send GET request to the favorites endpoint
     response = requests.get(base_url, headers=headers)
     
     # Check if the request was successful
