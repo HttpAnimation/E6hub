@@ -22,6 +22,7 @@ wget -O install.bash https://raw.githubusercontent.com/HttpAnimation/E6hub/stabl
 # Check if download was successful
 if [ $? -eq 0 ]; then
     echo "Downloaded install script successfully."
+    mv installNonRM.bash install.bash
     bash install.bash
 else
     echo "Failed to download install script."
