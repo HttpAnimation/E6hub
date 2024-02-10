@@ -20,7 +20,6 @@ def download_favorites():
         favorites = response.json()
         # Iterate through each favorite and process accordingly
         for favorite in favorites:
-            # Process each favorite as needed
             print(favorite)  # For example, you can print the favorite data
     else:
         print(f"Failed to download favorites. Status code: {response.status_code}")
