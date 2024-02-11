@@ -1,8 +1,7 @@
 import os
-import requests
 import json
 import concurrent.futures
-from requests.exceptions import Timeout
+import wget
 
 def load_config():
     try:
@@ -17,20 +16,7 @@ def load_config():
         print("Configuration file not found.")
         return "", ""
 
-def download_file(url, filename):
-    try:
-        with open(filename, "wb") as file:
-            response = requests.get(url, timeout=10)
-            response.raise_for_status() 
-            file.write(response.content)
-        print(f"Downloaded {filename}")
-    except Timeout:
-        print(f"Download timed out for {filename}")
-    except Exception as e:
-        print(f"Failed to download {filename}: {e}")
-
 def download_favorite(favorite, index, save_directory):
-    # Save JSON data
     json_filename = os.path.join(save_directory, f"favorite_{index}.json")
     with open(json_filename, "w") as file:
         json.dump(favorite, file, indent=4)
@@ -42,17 +28,18 @@ def download_favorite(favorite, index, save_directory):
         media_url = media.get("url", "")
         if media_url:
             media_extension = os.path.splitext(media_url)[1].lower()
-            media_folder = os.path.join(save_directory, media_extension[1:] + "s")  # Remove leading dot and add "s" for folder name
+            media_folder = os.path.join(save_directory, media_extension[1:] + "s")
             os.makedirs(media_folder, exist_ok=True)
             media_filename = os.path.join(media_folder, f"favorite_{index}{media_extension}")
-            download_file(media_url, media_filename)
+            wget.download(media_url, out=media_filename)
+            print(f"Downloaded {media_filename}")
     else:
         print(f"No media found for favorite {index + 1}")
 
 def download_favorites(username, api_key):
     base_url = "https://e621.net/favorites.json"
     headers = {
-        "User-Agent": f"E6hub/1.6 (by {username} on e621)"
+        "User-Agent": f"E6hub/1.7 (by {username} on e621)"
     }
     auth = (username, api_key)
     page = 1
