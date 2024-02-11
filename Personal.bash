@@ -1,6 +1,7 @@
 cd ../ 
 rm -rf /home/httpanimations/Desktop/stable
 cp -r stable /home/httpanimations/Desktop/
-cd stable
+cd /home/httpanimations/Desktop/stable
 rm '[PUBLIC] clientconfig.json'
+rm -rf .git
 cd ../
