@@ -15,10 +15,19 @@ def load_config():
         print("Configuration file not found.")
         return "", ""
 
+def download_file(url, filename):
+    try:
+        with open(filename, "wb") as file:
+            response = requests.get(url)
+            file.write(response.content)
+        print(f"Downloaded {filename}")
+    except Exception as e:
+        print(f"Failed to download {filename}: {e}")
+
 def download_favorites(username, api_key):
     base_url = "https://e621.net/favorites.json"
     headers = {
-        "User-Agent": f"E6hub/1.3 (by {username} on e621)"
+        "User-Agent": f"E6hub/1.4 (by {username} on e621)"
     }
     auth = (username, api_key)
     page = 1
@@ -34,13 +43,25 @@ def download_favorites(username, api_key):
             if not favorites:
                 break
             total_favorites += len(favorites)
-            save_directory = "UserFavDownloads/jsonData"
+            save_directory = "UserFavDownloads"
             os.makedirs(save_directory, exist_ok=True)
             for idx, favorite in enumerate(favorites):
-                filename = os.path.join(save_directory, f"favorite_{total_favorites - len(favorites) + idx}.json")
-                with open(filename, "w") as file:
+                json_filename = os.path.join(save_directory, f"favorite_{total_favorites - len(favorites) + idx}.json")
+                with open(json_filename, "w") as file:
                     json.dump(favorite, file, indent=4) 
-                print(f"Favorite {total_favorites - len(favorites) + idx + 1} downloaded and saved as {filename}")
+                print(f"Favorite {total_favorites - len(favorites) + idx + 1} JSON data saved as {json_filename}")
+                
+                media = favorite.get("file", {})
+                if media:
+                    media_url = media.get("url", "")
+                    if media_url:
+                        media_extension = os.path.splitext(media_url)[1].lower()
+                        media_folder = os.path.join(save_directory, media_extension[1:] + "s")  # Remove leading dot and add "s" for folder name
+                        os.makedirs(media_folder, exist_ok=True)
+                        media_filename = os.path.join(media_folder, f"favorite_{total_favorites - len(favorites) + idx}{media_extension}")
+                        download_file(media_url, media_filename)
+                else:
+                    print(f"No media found for favorite {total_favorites - len(favorites) + idx + 1}")
             page += 1
         else:
             print(f"Failed to download favorites. Status code: {response.status_code}")
