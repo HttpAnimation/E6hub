@@ -2,6 +2,7 @@ import os
 import requests
 import json
 import concurrent.futures
+from requests.exceptions import Timeout
 
 def load_config():
     try:
@@ -19,9 +20,12 @@ def load_config():
 def download_file(url, filename):
     try:
         with open(filename, "wb") as file:
-            response = requests.get(url)
+            response = requests.get(url, timeout=10)
+            response.raise_for_status() 
             file.write(response.content)
         print(f"Downloaded {filename}")
+    except Timeout:
+        print(f"Download timed out for {filename}")
     except Exception as e:
         print(f"Failed to download {filename}: {e}")
 
@@ -48,7 +52,7 @@ def download_favorite(favorite, index, save_directory):
 def download_favorites(username, api_key):
     base_url = "https://e621.net/favorites.json"
     headers = {
-        "User-Agent": f"E6hub/1.5 (by {username} on e621)"
+        "User-Agent": f"E6hub/1.6 (by {username} on e621)"
     }
     auth = (username, api_key)
     page = 1
