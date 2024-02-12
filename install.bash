@@ -25,4 +25,5 @@ echo "Done"
 echo "Moving up"
 cd ../
 echo "Done"
+echo "Removing my self goodbye daddy~"
 rm install.bash
