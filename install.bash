@@ -21,3 +21,5 @@ rm -rf .git
 rm .gitignore
 rm download.py
 echo "Done"
+
+cd ../
