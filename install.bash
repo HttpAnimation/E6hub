@@ -22,7 +22,7 @@ rm .gitignore
 rm download.py
 echo "Done"
 
-echo "Installing"
+echo "Installing npms"
 npm install express axios
 
 echo "Moving up"
