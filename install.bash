@@ -5,5 +5,6 @@ echo "Note: This script it going under a rewrite."
 echo "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
 sleep 2
 
+echo "Cloneing the repo."
 git clone -b stable https://github.com/HttpAnimation/E6hub.git
 cd E6hub
