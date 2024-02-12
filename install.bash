@@ -8,3 +8,4 @@ sleep 2
 echo "Cloneing the repo."
 git clone -b stable https://github.com/HttpAnimation/E6hub.git
 cd E6hub
+echo Done"
