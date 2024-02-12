@@ -22,5 +22,6 @@ rm .gitignore
 rm download.py
 echo "Done"
 
+echo "Moving up"
 cd ../
 rm install.bash
