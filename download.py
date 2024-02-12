@@ -2,6 +2,7 @@ import os
 import json
 import concurrent.futures
 import wget
+import requests
 
 def load_config():
     try:
@@ -22,7 +23,6 @@ def download_favorite(favorite, index, save_directory):
         json.dump(favorite, file, indent=4)
     print(f"Favorite {index + 1} JSON data saved as {json_filename}")
 
-    # Download media files
     media = favorite.get("file", {})
     if media:
         media_url = media.get("url", "")
@@ -39,7 +39,7 @@ def download_favorite(favorite, index, save_directory):
 def download_favorites(username, api_key):
     base_url = "https://e621.net/favorites.json"
     headers = {
-        "User-Agent": f"E6hub/1.7 (by {username} on e621)"
+        "User-Agent": f"E6hub/1.8 (by {username} on e621)"
     }
     auth = (username, api_key)
     page = 1
