@@ -19,7 +19,7 @@ app.get('/view-posts', async (req, res) => {
   try {
     const response = await axios.get('https://e621.net/posts.json?limit=10', {
       headers: {
-        'User-Agent': 'MyProject/1.0 (by username on e621)'
+        'User-Agent': 'E6hub/1.0 (by username on e621)'
       }
     });
     const posts = response.data.posts;
