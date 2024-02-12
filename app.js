@@ -53,6 +53,11 @@ app.get('/view-posts', async (req, res) => {
   }
 });
 
+// Route for the root path
+app.get('/', (req, res) => {
+  res.send('Welcome to the homepage! Please visit /view-posts to view posts from e621.');
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
