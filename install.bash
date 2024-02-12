@@ -9,7 +9,7 @@ echo "Cloneing the repo."
 git clone -b stable https://github.com/HttpAnimation/E6hub.git
 echo "Heading into E6hub"
 cd E6hub
-echo Done"
+echo "Done"
 
 echo "Removing files"
 rm InstallNonRM.bash
