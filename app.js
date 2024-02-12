@@ -1,80 +1,70 @@
-const express = require('express');
-const fs = require('fs');
-const axios = require('axios');
-
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-// Load client config from clientconfig.json
-let clientConfig = [];
-try {
-  const configData = fs.readFileSync('clientconfig.json', 'utf8');
-  clientConfig = JSON.parse(configData);
-} catch (err) {
-  console.error('Error reading clientconfig.json:', err);
-}
-
-// Middleware to parse JSON bodies
-app.use(express.json());
-
-// Serve HTML page with buttons
-app.get('/', (req, res) => {
-  res.send(`
-    <html>
-    <head>
-      <title>e621 API Example</title>
-    </head>
-    <body>
-      <h1>e621 API Example</h1>
-      <button onclick="downloadPosts()">Download/Update Posts</button>
-      <button onclick="viewPosts()">View Posts</button>
-      <button onclick="viewLocalPosts()">View Local Posts</button>
-      <script>
-        function downloadPosts() {
-          // Logic for downloading/updating posts
-          console.log('Downloading/Updating Posts');
+// Logic for viewing posts from e621
+app.get('/view-posts', async (req, res) => {
+    try {
+      const response = await axios.get('https://e621.net/posts.json?limit=10', {
+        headers: {
+          'User-Agent': 'MyProject/1.0 (by username on e621)'
         }
-        function viewPosts() {
-          // Logic for viewing posts from e621
-          console.log('Viewing Posts');
+      });
+      const posts = response.data;
+      res.send(`
+        <html>
+        <head>
+          <title>Newest Posts on e621</title>
+        </head>
+        <body>
+          <h1>Newest Posts on e621</h1>
+          <div id="posts">
+            ${renderPosts(posts)}
+          </div>
+          <button onclick="loadMore()">Load More</button>
+          <script>
+            let page = 2; // Start loading from page 2
+            async function loadMore() {
+              const response = await fetch('/load-more-posts?page=' + page);
+              const data = await response.json();
+              const newPosts = ${renderPosts(data)};
+              document.getElementById('posts').innerHTML += newPosts;
+              page++;
+            }
+          </script>
+        </body>
+        </html>
+      `);
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+      res.status(500).send('Failed to fetch posts from e621.');
+    }
+  });
+  
+  // Route to load more posts
+  app.get('/load-more-posts', async (req, res) => {
+    try {
+      const page = req.query.page || 1;
+      const response = await axios.get(`https://e621.net/posts.json?limit=10&page=${page}`, {
+        headers: {
+          'User-Agent': 'MyProject/1.0 (by username on e621)'
         }
-        function viewLocalPosts() {
-          // Logic for viewing locally stored posts
-          console.log('Viewing Local Posts');
-        }
-      </script>
-    </body>
-    </html>
-  `);
-});
-
-// Logic for downloading/updating posts
-app.post('/download-posts', async (req, res) => {
-  try {
-    // Assuming clientConfig only has one entry for now
-    const { Username, Token } = clientConfig[0];
-    const response = await axios.get('https://e621.net/posts.json?limit=10', {
-      headers: {
-        Authorization: `Basic ${Buffer.from(`${Username}:${Token}`).toString('base64')}`,
-        'User-Agent': 'MyProject/1.0 (by username on e621)'
-      }
+      });
+      const posts = response.data;
+      res.json(posts);
+    } catch (error) {
+      console.error('Error fetching more posts:', error);
+      res.status(500).json({ error: 'Failed to fetch more posts from e621.' });
+    }
+  });
+  
+  // Function to render posts HTML
+  function renderPosts(posts) {
+    let html = '';
+    posts.forEach(post => {
+      html += `
+        <div>
+          <h3>${post.id}</h3>
+          <img src="${post.file.url}" alt="Post ${post.id}">
+        </div>
+      `;
     });
-    const posts = response.data;
-    console.log(posts);
-    res.json({ success: true, message: 'Posts downloaded/updated successfully.' });
-  } catch (error) {
-    console.error('Error downloading/updating posts:', error);
-    res.status(500).json({ success: false, error: 'Failed to download/update posts.' });
+    return html;
   }
-});
-
-// Logic for viewing local posts
-app.get('/local-posts', (req, res) => {
-  // Assuming local posts are stored somewhere
-  console.log('Viewing local posts');
-  res.send('Viewing local posts');
-});
-
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+  
