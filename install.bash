@@ -5,3 +5,4 @@ echo "Note: This script it going under a rewrite"
 echo "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
 sleep 2
 
+git clone -b stable https://github.com/HttpAnimation/E6hub.git
