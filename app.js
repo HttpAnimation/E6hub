@@ -19,7 +19,7 @@ app.get('/view-posts', async (req, res) => {
   try {
     const response = await axios.get('https://e621.net/posts.json?limit=10', {
       headers: {
-        'User-Agent': 'E6hub/1.0 (by username on e621)'
+        'User-Agent': 'MyProject/1.0 (by username on e621)'
       }
     });
     const posts = response.data.posts;
@@ -37,7 +37,11 @@ app.get('/view-posts', async (req, res) => {
         <script>
           let page = 2; // Start loading from page 2
           async function loadMore() {
-            const response = await fetch('/load-more-posts?page=' + page);
+            const response = await fetch('https://e621.net/posts.json?limit=10&page=' + page, {
+              headers: {
+                'User-Agent': 'MyProject/1.0 (by username on e621)'
+              }
+            });
             const data = await response.json();
             const newPosts = ${renderPosts(data)};
             document.getElementById('posts').innerHTML += newPosts;
@@ -51,11 +55,6 @@ app.get('/view-posts', async (req, res) => {
     console.error('Error fetching posts:', error);
     res.status(500).send('Failed to fetch posts from e621.');
   }
-});
-
-// Route for the root path
-app.get('/', (req, res) => {
-  res.send('Welcome to the homepage! Please visit /view-posts to view posts from e621.');
 });
 
 // Start the server
