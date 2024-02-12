@@ -26,6 +26,9 @@ echo "Installing npms"
 echo "Installing axios"
 npm install express axios
 echo "Done"
+echo "Installing express"
+npm install express
+echo "Done"
 
 echo "Moving up"
 cd ../
