@@ -4,21 +4,17 @@ const axios = require('axios');
 const app = express();
 const port = 3000;
 
-app.get('/', (req, res) => {
-  res.send(`
-    <html>
-    <head>
-      <title>Welcome to e621 Viewer</title>
-    </head>
-    <body>
-      <h1>Welcome to e621 Viewer</h1>
-      <a href="/view-posts"><button>View Posts</button></a>
-    </body>
-    </html>
-  `);
-});
+// Logic for rendering posts
+function renderPosts(posts) {
+  return posts.map(post => `
+    <div>
+      <img src="${post.file.url}" alt="Post Image" />
+      <p>${post.description}</p>
+    </div>
+  `).join('');
+}
 
-// Logic for viewing posts from e621
+// Route for viewing posts
 app.get('/view-posts', async (req, res) => {
   try {
     const response = await axios.get('https://e621.net/posts.json?limit=10', {
@@ -26,7 +22,7 @@ app.get('/view-posts', async (req, res) => {
         'User-Agent': 'MyProject/1.0 (by username on e621)'
       }
     });
-    const posts = response.data;
+    const posts = response.data.posts;
     res.send(`
       <html>
       <head>
@@ -57,37 +53,7 @@ app.get('/view-posts', async (req, res) => {
   }
 });
 
-// Route to load more posts
-app.get('/load-more-posts', async (req, res) => {
-  try {
-    const page = req.query.page || 1;
-    const response = await axios.get(`https://e621.net/posts.json?limit=10&page=${page}`, {
-      headers: {
-        'User-Agent': 'MyProject/1.0 (by username on e621)'
-      }
-    });
-    const posts = response.data;
-    res.json(posts);
-  } catch (error) {
-    console.error('Error fetching more posts:', error);
-    res.status(500).json({ error: 'Failed to fetch more posts from e621.' });
-  }
-});
-
-// Function to render posts HTML
-function renderPosts(posts) {
-  let html = '';
-  posts.forEach(post => {
-    html += `
-      <div>
-        <h3>${post.id}</h3>
-        <img src="${post.file.url}" alt="Post ${post.id}">
-      </div>
-    `;
-  });
-  return html;
-}
-
+// Start the server
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+  console.log(`Server listening at http://localhost:${port}`);
 });
