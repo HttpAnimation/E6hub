@@ -23,3 +23,4 @@ rm download.py
 echo "Done"
 
 cd ../
+rm install.bash
