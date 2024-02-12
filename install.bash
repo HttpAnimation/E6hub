@@ -24,4 +24,5 @@ echo "Done"
 
 echo "Moving up"
 cd ../
+echo "Done"
 rm install.bash
