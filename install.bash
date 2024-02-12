@@ -22,6 +22,9 @@ rm .gitignore
 rm download.py
 echo "Done"
 
+echo "Installing"
+
+
 echo "Moving up"
 cd ../
 echo "Done"
