@@ -10,3 +10,14 @@ git clone -b stable https://github.com/HttpAnimation/E6hub.git
 echo "Heading into E6hub"
 cd E6hub
 echo Done"
+
+echo "Removing files"
+rm InstallNonRM.bash
+rm install.bash
+rm MakeCD.bash
+rm Personal.bash
+rm README.md
+rm -rf .git
+rm .gitignore
+rm download.py
+echo "Done"
