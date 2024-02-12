@@ -6,3 +6,4 @@ echo "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
 sleep 2
 
 git clone -b stable https://github.com/HttpAnimation/E6hub.git
+cd E6hub
