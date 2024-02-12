@@ -23,7 +23,7 @@ rm download.py
 echo "Done"
 
 echo "Installing"
-
+npm install express axios
 
 echo "Moving up"
 cd ../
